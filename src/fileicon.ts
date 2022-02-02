@@ -1,3 +1,14 @@
+const apps: Fig.Generator = {
+  script: "ls -d /Applications/*",
+  postProcess: (output) => {
+    return output.split("\n").map((set) => ({
+      name: set,
+      icon: "fig:///Applications/",
+      description: "Set icon for this app",
+    }));
+  },
+};
+
 const completionSpec: Fig.Spec = {
   name: "fileicon",
   description: "Manage custom icons for files and folders on macOS",
@@ -8,7 +19,7 @@ const completionSpec: Fig.Spec = {
       args: [
         {
           name: "fileOrFolder",
-          template: "filepaths",
+          generators: apps,
         },
         {
           name: "[imageFile]",
